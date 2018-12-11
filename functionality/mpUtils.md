@@ -9,6 +9,7 @@ Callable functions are:
 - wkfDispatcherInfo(_wkfProjectObj_, _username_)
 - wkfWorkersInfo(_wkfProjectObj_)
 - wkfAssignmentsInfo(_wkfProjectObj_, _wkfAssignmentsQuery_)
+- offSet()
 
 #### Example usage:
 Simply ```import mpUtils``` at the beginning of python script.

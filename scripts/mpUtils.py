@@ -1,3 +1,4 @@
+import time, datetime
 from arcgis.gis import GIS
 from arcgis.apps import workforce
 
@@ -34,7 +35,7 @@ def agolAuth(username, password):
     print('AGOL urls -> ', str(mpGis))
     return mpGis
 
-# workforce project
+# Workforce project
 def wkfProjectInfo(gisObj, projectName):
     try:
         mpWkfProjectItem = gisObj.content.search(query='title:"'+ projectName + '" type:Workforce Project')[0]
@@ -66,7 +67,13 @@ def wkfAssignmentsInfo(wkfProjectObj, wkfAssignmentsQuery='1=1'):
     mpWkfAssignmentsFset = wkfProjectObj.assignments_layer.query(where=wkfAssignmentsQuery)
     return mpWkfAssignmentsList, mpWkfAssignmentsFset
 
-
+# UTC offset
+def offSet():
+    ts = time.time()
+    hereTime = datetime.datetime.fromtimestamp(ts)
+    utcTime = datetime.datetime.utcfromtimestamp(ts)
+    offSet = (hereTime - utcTime).total_seconds()
+    return offSet
 
 
 
