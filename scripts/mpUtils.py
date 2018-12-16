@@ -68,12 +68,12 @@ def wkfAssignmentsInfo(wkfProjectObj, wkfAssignmentsQuery='1=1'):
     return mpWkfAssignmentsList, mpWkfAssignmentsFset
 
 # UTC offset
-def offSet():
+def utcOffSet():
     ts = time.time()
     hereTime = datetime.datetime.fromtimestamp(ts)
     utcTime = datetime.datetime.utcfromtimestamp(ts)
-    offSet = (hereTime - utcTime).total_seconds()
-    return offSet
+    utcOffSet = (hereTime - utcTime).total_seconds()
+    return utcOffSet
 
 
 
