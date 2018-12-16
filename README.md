@@ -11,6 +11,7 @@ Supports:
 | Functionality | Script |
 |-|-|
 | [Workforce Plan Assignments](functionality/workforceAssignmentsPlan.md) | [workforceAssignmentsPlan.py](scripts/workforceAssignmentsPlan.py) |
+| [Workforce Export All Assignments into xlsx file](functionality/workforceAssignmentsExport.md) | [workforceAssignmentsExport.py](scripts/workforceAssignmentsExport.py) |
 | [Workforce Clean Assignments](functionality/workforceAssignmentsClean.md) | [workforceAssignmentsClean.py](scripts/workforceAssignmentsClean.py) |
 | [Load Unassigned Tasks into Workforce](functionality/workforceAssignmentsBulkLoad.md) | [workforceAssignmentsBulkLoad.py](scripts/workforceAssignmentsBulkLoad.py) |
 | [MobyPlanner Utility Module](functionality/mpUtils.md) | [mpUtils.py](scripts/mpUtils.py) |
