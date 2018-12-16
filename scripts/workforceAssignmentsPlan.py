@@ -16,7 +16,7 @@ mpWkfProjectId, mpWkfProject = mpUtils.wkfProjectInfo(mpGis, args.projectName)
 # Workforce dispatchers
 mpWkfDispatchersList, mpWkfDispatcher = mpUtils.wkfDispatcherInfo(mpWkfProject, args.username)
 # Workforce assigments
-mpWkfAssignmentsQuery = 'status = 0'
+mpWkfAssignmentsQuery = 'status = 0' # select only Unassigned
 mpWkfAssignmentsList, mpWkfAssignmentsFset = mpUtils.wkfAssignmentsInfo(mpWkfProject, mpWkfAssignmentsQuery)
 # Workforce workers
 mpWkfWorkersList, mpWkfWorkersFset = mpUtils.wkfWorkersInfo(mpWkfProject)
