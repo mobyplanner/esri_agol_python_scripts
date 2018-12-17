@@ -45,6 +45,12 @@ for mpGidList in mpWkfAssignmentsDf.GlobalID:
     mpWkfAssignment2Reset.attributes['assignedDate'] = None
     mpWkfAssignment2Reset.attributes['EditDate'] = None
     mpWkfAssignment2Reset.attributes['Editor'] = None
+    mpWkfAssignment2Reset.attributes['declinedComment'] = None
+    mpWkfAssignment2Reset.attributes['assignmentRead'] = None
+    mpWkfAssignment2Reset.attributes['inProgressDate'] = None
+    mpWkfAssignment2Reset.attributes['completedDate'] = None
+    mpWkfAssignment2Reset.attributes['declinedDate'] = None
+    mpWkfAssignment2Reset.attributes['pausedDate'] = None
     
     mpWkfFeatures2Update.append(mpWkfAssignment2Reset)
     
