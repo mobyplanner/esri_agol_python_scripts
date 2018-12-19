@@ -19,11 +19,11 @@ mpWkfAssignmentsList, mpWkfAssignmentsFset = mpUtils.wkfAssignmentsInfo(mpWkfPro
 
 assignmentsNumber = len(mpWkfAssignmentsList)
 if assignmentsNumber != 0:
-    print("\nThere are " + str(assignmentsNumber) + " events on " + str(mpWkfProject) + " project.")
+    print("\nThere are " + str(assignmentsNumber) + " tasks on " + str(mpWkfProject) + " project.")
     mpContinue = None
     while True:
         defaultYes = 'y'
-        mpContinue = input("Do you want to delete all events before upload? ([y]/n/q) ") or defaultYes
+        mpContinue = input("Do you want to delete all tasks before upload? ([y]/n/q) ") or defaultYes
         if mpContinue not in ('y', 'n', 'q'):
             print("Not an appropriate choice. Please select 'y' or 'n'")
         if mpContinue == 'n':
@@ -38,24 +38,27 @@ if assignmentsNumber != 0:
 
 # Read file
 myBulkDf = pd.read_excel(args.xlsFile)
-print("Loading " + str(myBulkDf.shape[0]) + " events...")
+print("Loading " + str(myBulkDf.shape[0]) + " tasks...")
 
 # loads myBulkDf into assignments feature layer
 start_execution = time.time()
-for i in myBulkDf.index:
-    readRows = myBulkDf.loc[i]
-    mpWkfProject.assignments.add(
-        dispatcher=mpWkfDispatcher,
-        description=readRows.eventName,
-        work_order_id=readRows.eventID,
-        location=readRows.eventAddress,
-        assignment_type=mpWkfProject.assignment_types.get(name=readRows.eventType),
-        status=0, # 0->Unassigned, 1-> Assigned
-        priority=int(readRows.eventPriority),  # range must be 0-4
-        geometry=dict(x=float(readRows.Longitude), 
-                      y=float(readRows.Latitude),
-                      spatialReference=dict(wkid=int(4326))
-                     )
+mpWkfFeatures2Upload = []
+for _, row in myBulkDf.iterrows():
+    mpWkfFeatures2Upload.append(
+        workforce.Assignment(
+            mpWkfProject,
+            dispatcher=mpWkfDispatcher,
+            description=row.eventName,
+            work_order_id=row.eventID,
+            location=row.eventAddress,
+            assignment_type=mpWkfProject.assignment_types.get(name=row.eventType),
+            status="Unassigned",
+            priority=int(row.eventPriority),
+            geometry=dict(x=float(row.Longitude), 
+                          y=float(row.Latitude), 
+                          spatialReference=dict(wkid=int(4326))
+                          )
+        )
     )
-    print('--> ' + str(readRows.eventID) + ' added')
-print("Bulk completed in %s minutes.\n" % str(round(((time.time() - start_execution))/60, 2))) 
+mpWkfProject.assignments.batch_add(mpWkfFeatures2Upload)
+print("--- %s tasks loaded in %s minutes ---" % (len(mpWkfFeatures2Upload), str(round(((time.time() - start_execution))/60, 2))))
