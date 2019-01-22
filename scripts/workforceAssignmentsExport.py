@@ -50,7 +50,7 @@ mpWkfAssignmentsDf.workerId = mpWkfAssignmentsDf.workerId.map(workersMap)
 # datetime conversion
 columnsWithDateTime = mpWkfAssignmentsDf.select_dtypes(include='datetime64[ns]').columns
 mpWkfAssignmentsDf[columnsWithDateTime] = mpWkfAssignmentsDf[columnsWithDateTime].astype('int64')
-mpWkfAssignmentsDf[columnsWithDateTime] = ((mpWkfAssignmentsDf[columnsWithDateTime]*pow(10,6) + mpUtils.utcOffSet()*pow(10,9))) # add utcOffset to epoch in ns
+mpWkfAssignmentsDf[columnsWithDateTime] = ((mpWkfAssignmentsDf[columnsWithDateTime] + mpUtils.utcOffSet()*pow(10,9))) # add utcOffset to epoch
 mpWkfAssignmentsDf[columnsWithDateTime] = mpWkfAssignmentsDf[columnsWithDateTime].where(mpWkfAssignmentsDf[columnsWithDateTime] > (3.6*pow(10,12)), None) # NaT on old epoch
 mpWkfAssignmentsDf[columnsWithDateTime] = mpWkfAssignmentsDf[columnsWithDateTime].astype('datetime64[ns]')
 
@@ -61,7 +61,7 @@ mpWkfAssignments4xlsx.rename(columns={'OBJECTID': 'Object ID', 'workOrderId': 'W
 # Xlsx export
 start_execution = time.time()
 now = datetime.datetime.now()
-xlsOutputName = str(mpWkfProject) + 'assignments_' + str(now.year) + str(now.month) + str(now.day) + str(now.hour) + str(now.minute) + '.xlsx'
+xlsOutputName = str(mpWkfProject) + '_assignments_' + str(now.year) + str(now.month) + str(now.day) + str(now.hour) + str(now.minute) + '.xlsx'
 writer = pd.ExcelWriter(xlsOutputName, engine='xlsxwriter')
 mpWkfAssignments4xlsx.to_excel(writer, sheet_name= str(mpWkfProject) + ' Assignments Output', index=False)
 writer.save()
